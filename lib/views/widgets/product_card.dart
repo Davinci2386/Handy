@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:testtest/core/constant/app_colors.dart';
 import 'package:marquee/marquee.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -130,9 +130,10 @@ class _ProductCardState extends State<ProductCard> {
                               )),
                           GestureDetector(
                             onTap: () async {
-                              SharedPreferences prefs =
-                                  await SharedPreferences.getInstance();
-                              String? stringValue = prefs.getString('token');
+                              final storage = new FlutterSecureStorage();
+
+                              String? stringValue =
+                                  await storage.read(key: 'token');
                               isloading = true;
                               setState(() {});
                               dynamic payurl = await payforproducts(

@@ -1,12 +1,12 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:testtest/core/constant/app_colors.dart';
 import 'package:testtest/views/screens/login_and_signup/login_view.dart';
 import 'package:testtest/views/screens/main_screens/bills.dart';
 import 'package:testtest/views/screens/main_screens/home_screen.dart';
-import 'package:testtest/views/screens/main_screens/money_transfer.dart';
+import 'package:testtest/views/screens/main_screens/history.dart';
 
 import 'main_screens/shopping.dart';
 
@@ -31,7 +31,7 @@ class _HomeViewState extends State<HomeView> {
     } else if (index == 2) {
       body = Bills();
     } else if (index == 3) {
-      body = const MoneyTransfer();
+      body = const PaymentHistory();
     }
   }
 
@@ -43,9 +43,10 @@ class _HomeViewState extends State<HomeView> {
         actions: [
           IconButton(
             onPressed: () async {
-              SharedPreferences prefs = await SharedPreferences.getInstance();
-              prefs.remove('token');
-              // ignore: use_build_context_synchronously
+              final storage = new FlutterSecureStorage();
+
+              storage.delete(
+                  key: 'token'); // ignore: use_build_context_synchronously
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
@@ -71,7 +72,7 @@ class _HomeViewState extends State<HomeView> {
           FaIcon(FontAwesomeIcons.house),
           Icon(HomeView.shoppingCart, size: 26),
           FaIcon(FontAwesomeIcons.moneyBills),
-          FaIcon(FontAwesomeIcons.moneyBillTransfer),
+          FaIcon(FontAwesomeIcons.clockRotateLeft),
         ],
         onTap: (value) {
           setState(() {

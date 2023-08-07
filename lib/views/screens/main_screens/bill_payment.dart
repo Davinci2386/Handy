@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:testtest/core/constant/app_colors.dart';
 import 'package:testtest/data/remote/pay_for_bills.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -119,9 +119,9 @@ class _BillPaymentState extends State<BillPayment> {
                 if (formkey.currentState!.validate()) {
                   isloading = true;
                   setState(() {});
-                  SharedPreferences prefs =
-                      await SharedPreferences.getInstance();
-                  String? stringValue = prefs.getString('token');
+                  final storage = new FlutterSecureStorage();
+
+                  String? stringValue = await storage.read(key: 'token');
                   dynamic payurl = await payforbills(
                       lastid: lastid!,
                       type: 'bills',

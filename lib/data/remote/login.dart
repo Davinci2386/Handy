@@ -1,6 +1,6 @@
 import 'dart:convert';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 
 Future<bool> login(
     {required String email,
@@ -14,9 +14,11 @@ Future<bool> login(
       body: jsonEncode({'email': email, 'password': password}), headers: m);
 
   if (response.statusCode == 200) {
+    final storage = FlutterSecureStorage();
     String tocken = jsonDecode(response.body)['password'];
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('token', tocken);
+    await storage.write(key: 'token', value: tocken);
+    String? tokenn = await storage.read(key: 'token');
+    print(tokenn);
     return true;
   } else {
     return false;
