@@ -12,13 +12,13 @@ Future<bool> login(
   };
   http.Response response = await http.post(Uri.parse(url),
       body: jsonEncode({'email': email, 'password': password}), headers: m);
-
+  print(response.statusCode);
   if (response.statusCode == 200) {
-    final storage = FlutterSecureStorage();
+    const storage = FlutterSecureStorage();
     String tocken = jsonDecode(response.body)['password'];
     await storage.write(key: 'token', value: tocken);
-    String? tokenn = await storage.read(key: 'token');
-    print(tokenn);
+    String? token = await storage.read(key: 'token');
+    print(token);
     return true;
   } else {
     return false;

@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:testtest/core/constant/app_colors.dart';
-import 'package:testtest/data/remote/get_hostory.dart';
-import 'package:testtest/data/remote/pay_for_transfer.dart';
+import 'package:testtest/data/remote/get_history.dart';
 import 'package:testtest/views/widgets/history_card.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
 
 // ignore: must_be_immutable

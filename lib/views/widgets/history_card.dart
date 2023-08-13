@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class HistoryCard extends StatelessWidget {
   String name;
   String date;

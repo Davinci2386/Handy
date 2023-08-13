@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -43,7 +44,7 @@ class _HomeViewState extends State<HomeView> {
         actions: [
           IconButton(
             onPressed: () async {
-              final storage = new FlutterSecureStorage();
+              const storage = FlutterSecureStorage();
 
               storage.delete(
                   key: 'token'); // ignore: use_build_context_synchronously
