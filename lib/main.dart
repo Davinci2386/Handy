@@ -1,8 +1,8 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:testtest/views/screens/login_and_signup/login_view.dart';
+import 'views/screens/login_and_signup/login_view.dart';
+
+import 'views/screens/login_and_signup/signup_view.dart';
 
 void main(List<String> args) async {
   runApp(const Home());
@@ -23,85 +23,18 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  Timer? idleTimer;
-
-  @override
-  void initState() {
-    super.initState();
-    _resetTimer();
-  }
-
-  void _resetTimer() {
-    if (idleTimer != null) {
-      idleTimer!.cancel();
-    }
-    idleTimer = Timer(const Duration(seconds: 5), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const LoginView()),
-      );
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-        theme: ThemeData(primarySwatch: Colors.deepPurple),
-        debugShowCheckedModeBanner: false,
-        home: MainPage());
-  }
-
-  @override
-  void dispose() {
-    idleTimer!.cancel();
-    super.dispose();
-  }
-}
-
-class MainPage extends StatefulWidget {
-  const MainPage({Key? key}) : super(key: key);
-
-  @override
-  State<MainPage> createState() => _MainPageState();
-}
-
-class _MainPageState extends State<MainPage> {
-  Timer? idleTimer;
-
-  @override
-  void initState() {
-    super.initState();
-    resetTimer();
-  }
-
-  void resetTimer() {
-    if (idleTimer != null) {
-      idleTimer!.cancel();
-    }
-    idleTimer = Timer(const Duration(seconds: 5), () {
-      Get.to(LoginView());
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Listener(
-      onPointerDown: (event) {
-        resetTimer();
-        print(000001);
-      },
-      child: const Scaffold(body: LoginView()),
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(primarySwatch: Colors.deepPurple),
+      title: 'Idle Timer Example',
+      initialRoute: '/',
+      getPages: [
+        GetPage(name: '/', page: () => const SignUp()),
+        GetPage(name: '/login', page: () => const LoginView()),
+      ],
+      home: const SignUp(),
     );
   }
 }
-
-
-// class Home extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return GetMaterialApp(
-//         theme: ThemeData(primarySwatch: Colors.deepPurple),
-//         debugShowCheckedModeBanner: false,
-//         home: Scaffold(body: LoginView()));
-//   }
-// }

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:testtest/data/remote/get_history.dart';
-import 'package:testtest/views/widgets/history_card.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+
+import '../../../controller/timer_controller.dart';
+import '../../../data/remote/get_history.dart';
+import '../../widgets/history_card.dart';
 
 // ignore: must_be_immutable
 class PaymentHistory extends StatefulWidget {
@@ -13,7 +16,7 @@ class PaymentHistory extends StatefulWidget {
 
 class _PaymentHistoryState extends State<PaymentHistory> {
   TextStyle textStyle = const TextStyle(fontSize: 24, color: Colors.white);
-
+  TimerController timerController = Get.put(TimerController());
   GlobalKey<FormState> formkey = GlobalKey();
 
   int? accountnum;
@@ -24,44 +27,49 @@ class _PaymentHistoryState extends State<PaymentHistory> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: getHistory(),
-        builder: (context, AsyncSnapshot<dynamic> snapshot) {
-          if (snapshot.hasData &&
-              snapshot.connectionState == ConnectionState.done) {
-            return ListView.builder(
-                itemCount: snapshot.data.length,
-                itemBuilder: (context, index) {
-                  return Column(
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 10),
-                        child: HistoryCard(
-                            date: DateFormat('yyyy-MM-dd')
-                                .format(DateTime.parse(
-                                    snapshot.data[index]['date']))
-                                .toString(),
-                            name: snapshot.data[index]['name'],
-                            quantity:
-                                snapshot.data[index]['quantity'].toString(),
-                            state: snapshot.data[index]['state'],
-                            totalPrice:
-                                snapshot.data[index]['totalPrice'].toString()),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      )
-                    ],
-                  );
-                });
-          } else {
-            return const Center(
-              child: CircularProgressIndicator(
-                color: Colors.white,
-              ),
-            );
-          }
-        });
+    return GestureDetector(
+      onTap: () {
+        timerController.restartTimer();
+      },
+      child: FutureBuilder(
+          future: getHistory(),
+          builder: (context, AsyncSnapshot<dynamic> snapshot) {
+            if (snapshot.hasData &&
+                snapshot.connectionState == ConnectionState.done) {
+              return ListView.builder(
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (context, index) {
+                    return Column(
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 10),
+                          child: HistoryCard(
+                              date: DateFormat('yyyy-MM-dd')
+                                  .format(DateTime.parse(
+                                      snapshot.data[index]['date']))
+                                  .toString(),
+                              name: snapshot.data[index]['name'],
+                              quantity:
+                                  snapshot.data[index]['quantity'].toString(),
+                              state: snapshot.data[index]['state'],
+                              totalPrice: snapshot.data[index]['totalPrice']
+                                  .toString()),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        )
+                      ],
+                    );
+                  });
+            } else {
+              return const Center(
+                child: CircularProgressIndicator(
+                  color: Colors.white,
+                ),
+              );
+            }
+          }),
+    );
   }
 }
 

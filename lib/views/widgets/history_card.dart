@@ -8,11 +8,13 @@ class HistoryCard extends StatelessWidget {
   String quantity;
   String totalPrice;
   HistoryCard(
-      {required this.date,
+      {Key? key,
+      required this.date,
       required this.name,
       required this.quantity,
       required this.state,
-      required this.totalPrice});
+      required this.totalPrice})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

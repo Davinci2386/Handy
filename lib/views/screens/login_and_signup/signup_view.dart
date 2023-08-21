@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-import 'package:testtest/core/constant/app_colors.dart';
-import 'package:testtest/data/remote/register.dart';
-import 'package:testtest/views/screens/login_and_signup/login_view.dart';
 
+import '../../../core/constant/app_colors.dart';
+import '../../../data/remote/register.dart';
 import '../../widgets/costum_textfield.dart';
+import 'login_view.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -15,6 +15,7 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  RegExp digitRegExp = RegExp(r'\d');
   List<String> options = ['Male', 'Female'];
   String? current;
   bool autovalidate = false;
@@ -22,6 +23,20 @@ class _SignUpState extends State<SignUp> {
   String? email, name, password, gender, birthdate;
   GlobalKey<FormState> formkey = GlobalKey();
   bool isloading = false;
+
+  bool hasRequiredCharacters(String input) {
+    RegExp uppercaseRegex = RegExp(r'[A-Z]');
+    RegExp lowercaseRegex = RegExp(r'[a-z]');
+    RegExp digitRegex = RegExp(r'[0-9]');
+    print(uppercaseRegex.hasMatch(input));
+    print(lowercaseRegex.hasMatch(input));
+    print(digitRegex.hasMatch(input));
+
+    return uppercaseRegex.hasMatch(input) &&
+        lowercaseRegex.hasMatch(input) &&
+        digitRegex.hasMatch(input);
+  }
+
   @override
   Widget build(BuildContext context) {
     // ignore: prefer_conditional_assignment
@@ -39,7 +54,7 @@ class _SignUpState extends State<SignUp> {
               child: Column(
                 children: [
                   const SizedBox(
-                    height: 30,
+                    height: 20,
                   ),
                   const Text(
                     "Handy!",
@@ -105,6 +120,10 @@ class _SignUpState extends State<SignUp> {
                         return 'field is required';
                       } else if (value.length < 8) {
                         return 'password should be more than 8 charechters';
+                      } else if (!hasRequiredCharacters(value)) {
+                        print(value);
+                        print(hasRequiredCharacters(value));
+                        return 'password should have a capital, small letters and number ';
                       }
                       return null;
                     },
@@ -158,7 +177,7 @@ class _SignUpState extends State<SignUp> {
                     ],
                   ),
                   const SizedBox(
-                    height: 24,
+                    height: 20,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
@@ -220,7 +239,7 @@ class _SignUpState extends State<SignUp> {
                     ],
                   ),
                   const SizedBox(
-                    height: 30,
+                    height: 28,
                   ),
                   GestureDetector(
                     onTap: () async {
@@ -254,7 +273,9 @@ class _SignUpState extends State<SignUp> {
                         } catch (ex) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                              content: Text(ex.toString()),
+                              content: ex.toString().isEmpty
+                                  ? Text("Error!")
+                                  : Text(ex.toString()),
                             ),
                           );
                         }
@@ -274,7 +295,10 @@ class _SignUpState extends State<SignUp> {
                         style: TextStyle(fontSize: 35, color: Colors.white),
                       ),
                     ),
-                  )
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
                 ],
               ),
             ),

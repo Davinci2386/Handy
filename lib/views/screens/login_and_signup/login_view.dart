@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:testtest/core/constant/app_colors.dart';
-import 'package:testtest/views/screens/home.dart';
-import 'package:testtest/views/screens/login_and_signup/signup_view.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../../../core/constant/app_colors.dart';
 import '../../../data/remote/login.dart';
 import '../../widgets/costum_textfield.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+
+import '../home.dart';
+import 'signup_view.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -161,11 +162,17 @@ class _LoginViewState extends State<LoginView> {
                                 builder: (context) => const HomeView(),
                               ),
                             );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                content:
+                                    Text("Check your email and password")));
                           }
                         } catch (ex) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                              content: Text(ex.toString()),
+                              content: ex.toString().isEmpty
+                                  ? Text("Check your email and password")
+                                  : Text(ex.toString()),
                             ),
                           );
                         }

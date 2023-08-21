@@ -2,10 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
-import 'package:testtest/core/class/models/product.dart';
 
 Future<dynamic> getHistory() async {
-  final storage = FlutterSecureStorage();
+  const storage = FlutterSecureStorage();
   storage.read(key: 'token');
   String? tokenn = await storage.read(key: 'token');
 

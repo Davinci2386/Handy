@@ -1,14 +1,13 @@
-import 'dart:async';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:testtest/core/constant/app_colors.dart';
-import 'package:testtest/views/screens/login_and_signup/login_view.dart';
-import 'package:testtest/views/screens/main_screens/bills.dart';
-import 'package:testtest/views/screens/main_screens/home_screen.dart';
-import 'package:testtest/views/screens/main_screens/history.dart';
 
+import '../../core/constant/app_colors.dart';
+import 'login_and_signup/login_view.dart';
+import 'main_screens/bills.dart';
+import 'main_screens/history.dart';
+import 'main_screens/home_screen.dart';
 import 'main_screens/shopping.dart';
 
 class HomeView extends StatefulWidget {
@@ -22,11 +21,11 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  Widget body = const HomeScreen();
+  Widget body = HomeScreen();
   int currentIndex = 0;
   setPage(int index) {
     if (index == 0) {
-      body = const HomeScreen();
+      body = HomeScreen();
     } else if (index == 1) {
       body = Shopping();
     } else if (index == 2) {

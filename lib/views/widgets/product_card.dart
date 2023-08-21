@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:testtest/core/constant/app_colors.dart';
 import 'package:marquee/marquee.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../core/constant/app_colors.dart';
 import '../../data/remote/pay_for_products.dart';
 
 // ignore: must_be_immutable
@@ -130,7 +130,7 @@ class _ProductCardState extends State<ProductCard> {
                               )),
                           GestureDetector(
                             onTap: () async {
-                              final storage = new FlutterSecureStorage();
+                              const storage = FlutterSecureStorage();
 
                               String? stringValue =
                                   await storage.read(key: 'token');
@@ -162,7 +162,7 @@ class _ProductCardState extends State<ProductCard> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(2.0),
                             child: Text(
                               "Price: " + finalprice.toString() + "\$",
                               style: const TextStyle(fontSize: 20),

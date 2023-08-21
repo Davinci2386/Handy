@@ -1,7 +1,8 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:testtest/core/class/models/product.dart';
+
+import '../../core/class/models/product.dart';
 
 Future<Product> getSingleProduct(int id) async {
   String url = "https://dummyjson.com/products/$id";
